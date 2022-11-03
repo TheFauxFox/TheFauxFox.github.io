@@ -82,6 +82,11 @@ body {
     width: max-content;
 }
 
+.underline {
+    border-bottom: 2px solid #632b97;
+    width: max-content;
+}
+
 p::before {
     content: "> ";
 }
@@ -112,4 +117,13 @@ ul {
     list-style-type: '[*] - ';
     margin-left: 50px;
     color:#bf7aff
+}
+
+.clickable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.no-underline {
+    text-decoration: none;
 }

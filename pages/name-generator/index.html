@@ -6,8 +6,9 @@
         <link rel="stylesheet" href="/assets/style.css">
     </head>
     <body>
+        <a class="mono no-underline underline" href="/">../</a>
         <div class="page-title mono underline-bold">Name Generator</div>
-        <p>Refresh the page for a new set of 20 names.</p>
+        <p class="underline clickable" onclick="getNames()">Click here to refresh the list</p>
         <ul id="name-list">
         </ul>
         <p>These names are generated from:</p>
@@ -18,15 +19,18 @@
         </ul>
     </body>
     <script>
-        fetch("./names.json").then(resp => {
-            resp.json().then(names => {
-                let output = "";
-                for(let i = 0; i < 20; i ++) {
-                    const randInt = Math.floor(Math.random() * (names.length)) + 1
-                    output += `<li>${names[randInt]}</li>`;
-                }
-                document.getElementById("name-list").innerHTML=output;
-            })
-        })
+        const getNames = () => {
+            fetch("./names.json").then(resp => {
+                resp.json().then(names => {
+                    let output = "";
+                    for(let i = 0; i < 20; i ++) {
+                        const randInt = Math.floor(Math.random() * (names.length)) + 1;
+                        output += `<li>${names[randInt]}</li>`;
+                    }
+                    document.getElementById("name-list").innerHTML=output;
+                });
+            });
+        };
+        getNames();
     </script>
 </html>
