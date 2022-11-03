@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>
+            TheFauxFox's Name Generator
+        </title>
+        <link rel="stylesheet" href="/assets/style.css">
+    </head>
+    <body>
+        <div class="page-title mono underline-bold">Name Generator</div>
+        <p>Refresh the page for a new set of 20 names.</p>
+        <ul id="name-list">
+        </ul>
+        <p>These names are generated from:</p>
+        <ul>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_legendary_creatures_(A)">List of Legendary Creatures</a> (Wikipedia)</li>
+            <li><a href="https://www.britannica.com/topic/list-of-Greek-mythological-figures-2027488">List of Greek Mythological Figures</a> (Brittanica)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_minor_Greek_mythological_figures">List of Greek Minor Mythological Figures</a> (Wikipedia)</li>
+        </ul>
+    </body>
+    <script>
+        fetch("./names.json").then(resp => {
+            resp.json().then(names => {
+                let output = "";
+                for(let i = 0; i < 20; i ++) {
+                    const randInt = Math.floor(Math.random() * (names.length)) + 1
+                    output += `<li>${names[randInt]}</li>`;
+                }
+                document.getElementById("name-list").innerHTML=output;
+            })
+        })
+    </script>
+</html>

@@ -70,7 +70,7 @@ body {
 }
 
 .page-title::before {
-    content: ">_ ";
+    content: "~# ";
 }
 
 .page-title::after {
@@ -88,4 +88,28 @@ p::before {
 
 p {
     color: #bf7aff;
+}
+
+a {
+    color: #632b97;
+}
+
+.section-title {
+    font-size: 2em;
+    color: #632b97;
+    margin-bottom: 30px;
+}
+
+.section-title::before {
+    content: "~$ ";
+}
+
+.section-title::after {
+    content: ":";
+}
+
+ul {
+    list-style-type: '[*] - ';
+    margin-left: 50px;
+    color:#bf7aff
 }
