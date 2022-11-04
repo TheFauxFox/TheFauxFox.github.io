@@ -11,7 +11,7 @@
         <p class="underline clickable" onclick="getNames()">Click here to generate another set</p>
         <ul id="name-list">
         </ul>
-        <p>These names are generated from:</p>
+        <p id="insert-count">These names are generated from:</p>
         <ul>
             <li><a href="https://en.wikipedia.org/wiki/Lists_of_legendary_creatures">List of Legendary Creatures</a> (Wikipedia)</li>
             <li><a href="https://www.britannica.com/topic/list-of-Greek-mythological-figures-2027488">List of Greek Mythological Figures</a> (Brittanica)</li>
@@ -30,7 +30,8 @@
                         const randInt = Math.floor(Math.random() * (names.length)) + 1;
                         output += `<li>${names[randInt]}</li>`;
                     }
-                    document.getElementById("name-list").innerHTML=output;
+                    document.getElementById("name-list").innerHTML = output;
+                    document.getElementById("insert-count").innerText = `These ${names.length.toLocaleString()} names are generated from:`
                 });
             });
         };
