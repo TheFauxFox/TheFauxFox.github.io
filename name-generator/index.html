@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>
+            TheFauxFox's Name Generator
+        </title>
+        <link rel="stylesheet" href="/assets/style.css">
+        <script src="/assets/script.js"></script>
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/favico/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/favico/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/favico/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+    </head>
+    <body>
+        <a class="mono no-underline underline" href="../">../</a>
+        <div class="page-title mono underline-bold">Name Generator</div>
+        <p class="underline clickable" onclick="getNames()">Click here to get another set</p>
+        <ul id="name-list">
+        </ul>
+        <p>Options:</p>
+        <div class="checkbox unchecked mono clickable" onmouseup="window['ascii-flag'] = !window['ascii-flag']; getNames()" name="ascii-flag" title="Get the closest ASCII character for unicode characters">ASCII Transliterate</div>
+        <p id="insert-count">These {{count}} names are scraped from:</p>
+        <ul>
+            <li><a href="https://en.wikipedia.org/wiki/Lists_of_legendary_creatures">Legendary Creatures</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_minor_Greek_mythological_figures">Minor Greek Mythological Figures</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Celtic_deities">Celtic Deities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_j%C3%B6tnar_in_Norse_mythology">Norse Mythological Jotnar</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_dwarfs_in_Norse_mythology">Norse Mythological Dwarfs</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Germanic_deities">Germanic Deities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_names_of_Odin">Names of Odin</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Japanese_deities">Japanese Deities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Turkic_mythological_figures">Turkic Mythological Figures</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Egyptian_deities">Egyptian Deities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/Vainakh_religion">Vainakh Religious Entities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/Georgian_mythology">Georgian Mythology Entities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Hindu_deities">Hindu Deities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/Aztec_mythology">Aztec Mythology Entities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Maya_gods_and_supernatural_beings">Maya Gods</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Native_American_deities">Native American Deities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/Finnish_mythology">Finnish Mythology Entities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Roman_deities">Roman Deities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Australian_Aboriginal_mythological_figures">Australian Aboriginal Mythological Figures</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_figures_in_the_Hawaiian_religion">Hawaiian Religion Entites</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_M%C4%81ori_deities">Maori Deities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Irish_mythological_figures">Irish Mythological Figures</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Lithuanian_gods_and_mythological_figures">Lithuanian Gods</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Hurrian_deities">Hurrian Deities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Mesopotamian_deities">Mesopotamian Deities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_Ugaritic_deities">Ugaritic Deities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/Tirthankara">Tirthankara</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_pre-Islamic_Arabian_deities">Pre-Islamic Arabian Deities</a> (Wikipedia)</li>
+            <li><a href="https://en.wikipedia.org/wiki/List_of_African_mythological_figures">African Mythological Figures</a> (Wikipedia)</li>
+            <li><a href="https://www.britannica.com/topic/list-of-Greek-mythological-figures-2027488">Greek Mythological Figures</a> (Britannica)</li>
+            <li><a href="https://www.britannica.com/topic/list-of-Egyptian-mythological-figures-2024677">Egyptian Mythological Figures</a> (Britannica)</li>
+            <li><a href="https://www.momjunction.com/baby-names/japanese/">Japanese Names</a> (Momjunction)</li>
+        </ul>
+    </body>
+    <script>
+        const getNames = () => {
+            fetch(`./names${window['ascii-flag'] ? '_iconv' : ''}.json`).then(resp => {
+                resp.json().then(names => {
+                    const nameList = document.getElementById("name-list")
+                    const countEle = document.getElementById("insert-count")
+                    let output = [];
+                    for(let i = 0; i < 20; i ++) {
+                        const randInt = Math.floor(Math.random() * (names.length)) + 1;
+                        output.push(`<li>${names[randInt]}</li>`);
+                    }
+                    nameList.innerHTML = output.join('');
+                    countEle.innerText = countEle.innerText.replace('{{count}}', names.length.toLocaleString())
+                });
+            });
+        };
+        getNames();
+    </script>
+</html>
