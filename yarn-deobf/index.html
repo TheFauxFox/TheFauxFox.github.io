@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>
+            TheFauxFox's Yarn Mapping Helper
+        </title>
+        <link rel="stylesheet" href="/assets/style.css">
+        <script src="/assets/script.js"></script>
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/favico/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/favico/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/favico/favicon-16x16.png">
+        <script src="https://cdn.jsdelivr.net/npm/fuzzysort@2.0.4/fuzzysort.min.js"></script>
+        <link rel="manifest" href="/site.webmanifest">
+    </head>
+    <body>
+        <a class="mono no-underline underline" href="../">../</a>
+        <div class="page-title mono underline-bold">Yarn mapping helper</div>
+        <label for="obf">Obfuscated class/method/field</label>
+        <input id="obf" name="obf" onfocus="this.select()" onkeyup="getObf()">
+        <ul id="name-list" class="mono">
+        </ul>
+    </body>
+    <script>
+        const getObf = () => {
+            const inp = document.getElementById('obf').value
+            const getGoodName = (inp) => {
+                return ((/.*\/(.+?) .*\/(.+)/).exec(inp).splice(1,Infinity).join(' -> '))
+            }
+            if (inp.length > 0) {
+                fetch(`./out.txt`).then(resp => {
+                    resp.text().then(body => {
+                        const nameList = document.getElementById("name-list")
+                        let output = [];
+                        const search = fuzzysort.go(`${inp} ->`, body.split('\n'), {limit: 20, threshold: -1000});
+                        search.sort((a,b) => b.score - a.score)
+                            .forEach(item => {
+                                console.log(item.score)
+                                output.push(`<li>${getGoodName(item.target)}</li>`)
+                            })
+                        nameList.innerHTML = output.join('');
+                    })
+                });
+            }
+        };
+        getObf();
+    </script>
+</html>

@@ -154,3 +154,25 @@ ul {
     color: #632b97;
     font-family: var(--font-mono);
 }
+
+input {
+    background-color: #141014;
+    border-style: none;
+    border: 1px solid #632b97;
+    padding: 5px;
+    border-radius: 5px;
+    color: #bf7aff;
+    font-family: var(--font-mono);
+}
+
+#obf {
+    font-size: large;
+}
+
+label {
+    color: #bf7aff;
+}
+
+label::after {
+    content: ':';
+}
