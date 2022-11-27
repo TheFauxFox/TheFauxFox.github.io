@@ -15,20 +15,20 @@
         <a class="mono no-underline underline" href="../">../</a>
         <div class="page-title mono underline-bold">Yarn mapping helper</div>
         <label for="obf">Obfuscated class/method/field</label>
-        <input id="obf" name="obf" onfocus="this.select()" onkeyup="getObf()">
+        <input id="obf" name="obf" placeholder="class_310" onfocus="this.select()" onkeyup="getObf()">
         <ul id="name-list" class="mono">
         </ul>
     </body>
     <script>
         const getObf = () => {
             const inp = document.getElementById('obf').value
+            const nameList = document.getElementById("name-list")
             const getGoodName = (inp) => {
                 return ((/.*\/(.+?) .*\/(.+)/).exec(inp).splice(1,Infinity).join(' -> '))
             }
             if (inp.length > 0) {
                 fetch(`./out.txt`).then(resp => {
                     resp.text().then(body => {
-                        const nameList = document.getElementById("name-list")
                         let output = [];
                         const search = fuzzysort.go(`${inp} ->`, body.split('\n'), {limit: 20, threshold: -1000});
                         search.sort((a,b) => b.score - a.score)
@@ -39,6 +39,8 @@
                         nameList.innerHTML = output.join('');
                     })
                 });
+            } else {
+                nameList.innerHTML = '';
             }
         };
         getObf();
