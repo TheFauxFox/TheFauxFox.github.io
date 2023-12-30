@@ -176,3 +176,45 @@ label {
 label::after {
     content: ':';
 }
+
+.vert-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.vert-container > .left {
+    margin-right: 10vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.vert-container > .right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    background-color: #141014;
+    border-style: none;
+    border: 1px solid #632b97;
+    padding: 10px;
+    border-radius: 5px;
+    color: #bf7aff;
+    font-family: var(--font-mono);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #632b97;
+    color: #141014;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.flex-pin-bottom {
+    justify-self: flex-end;
+}

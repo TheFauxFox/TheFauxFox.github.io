@@ -15,3 +15,11 @@ window.onload = () => {
     window[el.attributes.name.value] = el.classList.contains("checked");
   });
 };
+
+const onEnter = (ele, cb) => {
+  ele.onkeyup = (evt) => {
+    if (evt.key === "Enter") {
+      cb();
+    }
+  };
+}
